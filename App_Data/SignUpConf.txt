@@ -1,0 +1,7 @@
+﻿Welcome to the Big Event Website
+
+Here are your login details
+
+User name <% UserName %>
+Password <% Password %>
+

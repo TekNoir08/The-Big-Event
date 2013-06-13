@@ -1,0 +1,83 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="Master_Pages_MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head runat="server">
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+    <link href="../Styles/StyleSheet.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div id ="wrapper">
+<div id="header">
+   
+    <asp:Image ID="Image1" runat="server" ImageUrl="~/images/LogoTitle.jpg" 
+        Height="83px" Width="381px" />
+          </div>
+<div id="top">
+	<div id="menuBar">
+        <asp:Menu ID="Menu1" runat="server" BackColor="#B5C7DE" 
+            CssClass="menu" DynamicHorizontalOffset="2" 
+            Font-Names="Verdana" Font-Size="0.8em" ForeColor="#284E98" 
+            Orientation="Horizontal" StaticSubMenuIndent="10px">
+            <DynamicHoverStyle BackColor="#284E98" ForeColor="White" />
+            <DynamicMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <DynamicMenuStyle BackColor="#B5C7DE" />
+            <DynamicSelectedStyle BackColor="#507CD1" />
+            <Items>
+                <asp:MenuItem Text="Home" Value="New Item" NavigateUrl="~/Default.aspx"></asp:MenuItem>
+                <asp:MenuItem Text="Search for Tickets" Value="New Item" 
+                    NavigateUrl="~/User Pages/search.aspx"></asp:MenuItem>
+                <asp:MenuItem NavigateUrl="~/User Pages/MyEvents.aspx" Text="My Events" 
+                    Value="My Events"></asp:MenuItem>
+                <asp:MenuItem Text="Ticket Forum" Value="Ticket Forum" 
+                    NavigateUrl="~/User Pages/TicketForum.aspx"></asp:MenuItem>
+                <asp:MenuItem Text="My Profile" Value="New Item" NavigateUrl="~/MyProfile.aspx"></asp:MenuItem>
+                <asp:MenuItem Text="Login" Value="New Item" 
+                    NavigateUrl="~/Login.aspx"></asp:MenuItem>
+            </Items>
+            <StaticHoverStyle BackColor="#284E98" ForeColor="White" />
+            <StaticMenuItemStyle HorizontalPadding="5px" VerticalPadding="2px" />
+            <StaticSelectedStyle BackColor="#507CD1" />
+        </asp:Menu>
+    </div>
+    <div id="login">
+            <asp:LoginName ID="LoginName1" FormatString ="Logged in as {0}" runat="server" />
+    <asp:LoginView ID="LoginView1" runat="server">
+        <LoggedInTemplate>
+            (<asp:LoginStatus ID="LoginStatus2" runat="server" />)
+        </LoggedInTemplate>
+    </asp:LoginView>
+    </div>
+	</div>
+<div id="center">
+	<div id="mainContent">
+        <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+	</div>
+<div id="footer">
+    
+
+	<asp:LoginView ID="LoginView2" runat="server">
+        <RoleGroups>
+            <asp:RoleGroup Roles="Managers">
+                <ContentTemplate>
+                    <asp:HyperLink ID="HyperLink1" runat="server" 
+                        NavigateUrl="~/Management/AddNewEvent.aspx">Manager Interface</asp:HyperLink>
+                </ContentTemplate>
+            </asp:RoleGroup>
+        </RoleGroups>
+    </asp:LoginView>
+    
+
+	</div>
+    </div>
+    </form>
+</body>
+</html>
+

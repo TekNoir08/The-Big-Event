@@ -1,0 +1,296 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="Category" EntityType="DatabaseModel.Store.Category" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Event" EntityType="DatabaseModel.Store.Event" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="RegisteredEvents" EntityType="DatabaseModel.Store.RegisteredEvents" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="Venue" EntityType="DatabaseModel.Store.Venue" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_Event_Category" Association="DatabaseModel.Store.FK_Event_Category">
+            <End Role="Category" EntitySet="Category" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Venue" Association="DatabaseModel.Store.FK_Event_Venue">
+            <End Role="Venue" EntitySet="Venue" />
+            <End Role="Event" EntitySet="Event" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RegisteredEvents_Event" Association="DatabaseModel.Store.FK_RegisteredEvents_Event">
+            <End Role="Event" EntitySet="Event" />
+            <End Role="RegisteredEvents" EntitySet="RegisteredEvents" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryType" Type="nchar" Nullable="false" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="int" Nullable="false" />
+          <Property Name="EventType" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="VenueId" Type="int" Nullable="false" />
+          <Property Name="Price" Type="smallmoney" Nullable="false" />
+          <Property Name="Time" Type="time" Nullable="false" Precision="3" />
+          <Property Name="Date" Type="date" Nullable="false" />
+          <Property Name="NumOfTickets" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="RegisteredEvents">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EventId" Type="int" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmailAddress" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Won" Type="bit" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="Location" Type="nvarchar" Nullable="false" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Event_Category">
+          <End Role="Category" Type="DatabaseModel.Store.Category" Multiplicity="1" />
+          <End Role="Event" Type="DatabaseModel.Store.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Venue">
+          <End Role="Venue" Type="DatabaseModel.Store.Venue" Multiplicity="1" />
+          <End Role="Event" Type="DatabaseModel.Store.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="VenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RegisteredEvents_Event">
+          <End Role="Event" Type="DatabaseModel.Store.Event" Multiplicity="1" />
+          <End Role="RegisteredEvents" Type="DatabaseModel.Store.RegisteredEvents" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegisteredEvents">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="DatabaseEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Categories" EntityType="DatabaseModel.Category" />
+          <EntitySet Name="Events" EntityType="DatabaseModel.Event" />
+          <EntitySet Name="Venues" EntityType="DatabaseModel.Venue" />
+          <AssociationSet Name="FK_Event_Category" Association="DatabaseModel.FK_Event_Category">
+            <End Role="Category" EntitySet="Categories" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Event_Venue" Association="DatabaseModel.FK_Event_Venue">
+            <End Role="Venue" EntitySet="Venues" />
+            <End Role="Event" EntitySet="Events" />
+          </AssociationSet>
+          <EntitySet Name="RegisteredEvents" EntityType="DatabaseModel.RegisteredEvent" />
+          <AssociationSet Name="FK_RegisteredEvents_Event" Association="DatabaseModel.FK_RegisteredEvents_Event">
+            <End Role="Event" EntitySet="Events" />
+            <End Role="RegisteredEvent" EntitySet="RegisteredEvents" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Category">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryType" Type="String" Nullable="false" MaxLength="20" Unicode="true" FixedLength="true" />
+          <NavigationProperty Name="Events" Relationship="DatabaseModel.FK_Event_Category" FromRole="Category" ToRole="Event" />
+        </EntityType>
+        <EntityType Name="Event">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CategoryId" Type="Int32" Nullable="false" />
+          <Property Name="EventType" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="VenueId" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Decimal" Nullable="false" Precision="10" Scale="4" />
+          <Property Name="Time" Type="Time" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Category" Relationship="DatabaseModel.FK_Event_Category" FromRole="Event" ToRole="Category" />
+          <NavigationProperty Name="Venue" Relationship="DatabaseModel.FK_Event_Venue" FromRole="Event" ToRole="Venue" />
+          <Property Type="Int32" Name="NumOfTickets" Nullable="false" />
+          <NavigationProperty Name="RegisteredEvents" Relationship="DatabaseModel.FK_RegisteredEvents_Event" FromRole="Event" ToRole="RegisteredEvent" />
+        </EntityType>
+        <EntityType Name="Venue">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="Location" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="Events" Relationship="DatabaseModel.FK_Event_Venue" FromRole="Venue" ToRole="Event" />
+        </EntityType>
+        <Association Name="FK_Event_Category">
+          <End Role="Category" Type="DatabaseModel.Category" Multiplicity="1" />
+          <End Role="Event" Type="DatabaseModel.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Category">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Event_Venue">
+          <End Role="Venue" Type="DatabaseModel.Venue" Multiplicity="1" />
+          <End Role="Event" Type="DatabaseModel.Event" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Venue">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Event">
+              <PropertyRef Name="VenueId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RegisteredEvent">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Type="Int32" Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Type="Int32" Name="EventId" Nullable="false" />
+          <Property Type="String" Name="FirstName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="LastName" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Type="String" Name="EmailAddress" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Event" Relationship="DatabaseModel.FK_RegisteredEvents_Event" FromRole="RegisteredEvent" ToRole="Event" />
+          <Property Type="Boolean" Name="Won" />
+        </EntityType>
+        <Association Name="FK_RegisteredEvents_Event">
+          <End Type="DatabaseModel.Event" Role="Event" Multiplicity="1" />
+          <End Type="DatabaseModel.RegisteredEvent" Role="RegisteredEvent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Event">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="RegisteredEvent">
+              <PropertyRef Name="EventId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities1">
+          <EntitySetMapping Name="Categories">
+            <EntityTypeMapping TypeName="DatabaseModel.Category">
+              <MappingFragment StoreEntitySet="Category">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryType" ColumnName="CategoryType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Events">
+            <EntityTypeMapping TypeName="DatabaseModel.Event">
+              <MappingFragment StoreEntitySet="Event">
+                <ScalarProperty Name="NumOfTickets" ColumnName="NumOfTickets" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="EventType" ColumnName="EventType" />
+                <ScalarProperty Name="VenueId" ColumnName="VenueId" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Time" ColumnName="Time" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Venues">
+            <EntityTypeMapping TypeName="DatabaseModel.Venue">
+              <MappingFragment StoreEntitySet="Venue">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RegisteredEvents">
+            <EntityTypeMapping TypeName="DatabaseModel.RegisteredEvent">
+              <MappingFragment StoreEntitySet="RegisteredEvents">
+                <ScalarProperty Name="Won" ColumnName="Won" />
+                <ScalarProperty Name="EmailAddress" ColumnName="EmailAddress" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="EventId" ColumnName="EventId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="BigEvent">
+        <EntityTypeShape EntityType="DatabaseModel.Category" Width="1.5" PointX="0.5" PointY="0.625" Height="1.5956835937499998" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Event" Width="1.5" PointX="3" PointY="0.75" Height="2.9417936197916656" IsExpanded="true" />
+        <EntityTypeShape EntityType="DatabaseModel.Venue" Width="1.5" PointX="0.5" PointY="2.5" Height="1.7879850260416657" IsExpanded="true" />
+        <AssociationConnector Association="DatabaseModel.FK_Event_Category" ManuallyRouted="false">
+          <ConnectorPoint PointX="2" PointY="1.4853417968749998" />
+          <ConnectorPoint PointX="3" PointY="1.4853417968749998" />
+        </AssociationConnector>
+        <AssociationConnector Association="DatabaseModel.FK_Event_Venue" ManuallyRouted="false">
+          <ConnectorPoint PointX="2" PointY="3.2881982421875" />
+          <ConnectorPoint PointX="3" PointY="3.2881982421875" />
+        </AssociationConnector>
+        <EntityTypeShape EntityType="DatabaseModel.RegisteredEvent" Width="1.5" PointX="5.25" PointY="1.375" Height="2.1725878906249996" />
+        <AssociationConnector Association="DatabaseModel.FK_RegisteredEvents_Event" >
+          <ConnectorPoint PointX="4.5" PointY="2.4612939453125" />
+          <ConnectorPoint PointX="5.25" PointY="2.4612939453125" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>
